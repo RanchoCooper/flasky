@@ -11,6 +11,7 @@ flask-script = "*"
 jinja2 = "*"
 flask-bootstrap = "*"
 flask-wtf = "*"
+flask-moment = "*"
 
 [requires]
 python_version = "3.7"

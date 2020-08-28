@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from flask import Flask, render_template, request
+from datetime import datetime
+
 from flask_bootstrap import Bootstrap
+from flask import Flask, render_template, request
+from flask_moment import Moment
 from flask_script import Manager
 
 app = Flask(__name__)
 manager = Manager(app)
 bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 
 @app.route('/')
 def index():
     user_agent = request.headers.get('User-agent')
-    return render_template('index.html', user_agent=user_agent)
+    return render_template('index.html', user_agent=user_agent, current_time=datetime.utcnow())
 
 
 @app.route('/user/<name>')
