@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
 from flask_script import Manager
 
 app = Flask(__name__)
 manager = Manager(app)
+bootstrap = Bootstrap(app)
 
 
 @app.route('/')
