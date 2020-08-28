@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from flask_bootstrap import Bootstrap
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import flash, Flask, redirect, render_template, request, session, url_for
 from flask_moment import Moment
 from flask_script import Manager
 from flask_wtf import Form
@@ -37,6 +37,9 @@ def internal_server_error(e):
 def index():
     form = NameForm()
     if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('looks like you have changed your name!')
         session['name'] = form.name.data
         return redirect(url_for('index'))
     return render_template('index.html', form=form, name=session.get('name'))
