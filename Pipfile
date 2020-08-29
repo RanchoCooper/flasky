@@ -12,7 +12,7 @@ jinja2 = "*"
 flask-bootstrap = "*"
 flask-wtf = "*"
 flask-moment = "*"
-flask-sqlalchemy = "*"
+flask-sqlalchemy = "==2.4.4"
 flask-migrate = "*"
 flask-mail = "*"
 
