@@ -17,6 +17,9 @@ flask-sqlalchemy = "==2.4.4"
 flask-migrate = "*"
 flask-mail = "*"
 flask-login = "*"
+flask-email = "*"
+email-validator = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
