@@ -7,6 +7,7 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+werkzeug = "*"
 flask-script = "*"
 jinja2 = "*"
 flask-bootstrap = "*"
@@ -15,6 +16,7 @@ flask-moment = "*"
 flask-sqlalchemy = "==2.4.4"
 flask-migrate = "*"
 flask-mail = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.7"
