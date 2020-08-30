@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from flask import current_app, redirect, render_template, session, url_for
+from flask import current_app, redirect, session
 
 from app import db
 from app.email import send_email

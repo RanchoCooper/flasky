@@ -113,4 +113,7 @@ hs_err_pid*
 **/*DemoTest.java
 **/*Demo.java
 
+# ignore python tmp files
+**/__pycache__/**
+
 # End of https://www.gitignore.io/api/java,intellij
