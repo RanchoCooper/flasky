@@ -70,7 +70,7 @@ class User(db.Model, UserMixin):
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
-            if self.mail == current_app.config['FLASKY_ADMIN']:
+            if self.email == current_app.config['FLASKY_ADMIN']:
                 self.role = Role.query.filter_by(permissions=0xff).first()
             if self.role is None:
                 # set as default role
@@ -78,6 +78,21 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User %d: %s>' % (self.id, self.username)
+
+    @staticmethod
+    def reset_password(token, new_password):
+        s = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        user = User.query.get(data.get('reset'))
+        if user is None:
+            return False
+        user.password = new_password
+        db.session.add(user)
+        db.session.commit()
+        return True
 
     @property
     def password(self):
@@ -91,8 +106,8 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def generate_confirmation_token(self, expiration=3600):
-        s = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'confirm': self.id})
+        s = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id}).decode('utf-8')
 
     def confirm(self, token):
         s = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'])
@@ -106,6 +121,10 @@ class User(db.Model, UserMixin):
         db.session.add(self)
         db.session.commit()
         return True
+
+    def generate_reset_token(self, expiration=3600):
+        s = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'reset': self.id}).decode('utf-8')
 
     def can(self, permission):
         return self.role is not None and (self.role.permissions & permission) == permission
